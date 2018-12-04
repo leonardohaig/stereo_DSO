@@ -28,7 +28,7 @@ find_package(OpenCV QUIET)
 add_definitions("-DENABLE_SSE")
 set(CMAKE_CXX_FLAGS
    "${SSE_FLAGS} -O3 -fPIC -g -std=c++0x -march=native"
-		#"${SSE_FLAGS} -O0 -fPIC -g -std=c++0x -march=native"#here I modify to O0,so that gdb not 乱序
+	#	"${SSE_FLAGS} -O0 -fPIC -g -std=c++0x -march=native"#here I modify to O0,so that gdb not 乱序
 #   "${SSE_FLAGS} -O3 -g -std=c++0x -fno-omit-frame-pointer"
 )
 

@@ -163,7 +163,7 @@ private:
 	void makeGradients(Eigen::Vector3f** data);
 
     void debugPlot(int lvl, std::vector<IOWrap::Output3DWrapper*> &wraps);
-	void makeNN();
+	void makeNN();//计算每个点最邻近的10个点 neighbours，在上一层的最邻近点 parent。
 };
 
 

@@ -767,6 +767,10 @@ void CoarseInitializer::makeGradients(Eigen::Vector3f** data)
 	}
 }
 
+//在影像的每一层选取点，作为后续第二帧匹配生成
+// pointHessians 和 immaturePoints 的候选点，
+// 这些点存储在 CoarseInitializer::points 中。每一层点之间都有联系，
+
 // set first frame
 void CoarseInitializer::setFirstStereo(	CalibHessian* HCalib, FrameHessian* newFrameHessian, FrameHessian* newFrameHessian_Right)
 {
@@ -823,7 +827,8 @@ void CoarseInitializer::setFirstStereo(	CalibHessian* HCalib, FrameHessian* newF
                 pt->idepth_max_stereo = NAN;
 			    ImmaturePointStatus stat = pt->traceStereo(firstRightFrame, K, 1);
 
-			    if(stat==ImmaturePointStatus::IPS_GOOD) {
+			    if(stat==ImmaturePointStatus::IPS_GOOD)
+			    {
 //			    	assert(patternNum==9);
 				pl[nl].u = x;
 				pl[nl].v = y;
@@ -931,7 +936,7 @@ void CoarseInitializer::setFirstStereo(	CalibHessian* HCalib, FrameHessian* newF
 	delete[] statusMap;
 	delete[] statusMapB;
 
-	makeNN();
+	makeNN();//计算每个点最邻近的10个点 neighbours，在上一层的最邻近点 parent。
 
 	thisToNext=SE3();
 	snapped = false;
@@ -1135,6 +1140,7 @@ void CoarseInitializer::makeK(CalibHessian* HCalib)
 	}
 }
 
+//计算每个点最邻近的10个点 neighbours，在上一层的最邻近点 parent。
 void CoarseInitializer::makeNN()
 {
 	const float NNDistFactor=0.05;

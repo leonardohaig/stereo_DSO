@@ -51,7 +51,7 @@ enum ImmaturePointStatus {
 	IPS_BADCONDITION,			// not traced because of bad condition.
 	IPS_UNINITIALIZED};			// not even traced once.
 
-
+//未成熟点，需要使用非关键帧的影像对它的逆深度进行优化，在使用关键帧将它转换成 pointHessians，并且加入到窗口优化。
 class ImmaturePoint
 {
 public:

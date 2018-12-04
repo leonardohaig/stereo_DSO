@@ -302,7 +302,7 @@ Vec4 FullSystem::trackNewCoarse(FrameHessian* fh, FrameHessian* fh_right)
 	assert(allFrameHistory.size() > 0);
 	// set pose initialization.
 
-//    printf("the size of allFrameHistory is %d \n", (int)allFrameHistory.size());
+    printf("the size of allFrameHistory is %d \n", (int)allFrameHistory.size());
 
     // show original images
     for(IOWrap::Output3DWrapper* ow : outputWrapper)
@@ -1101,7 +1101,7 @@ void FullSystem::addActiveFrame( ImageAndExposure* image, ImageAndExposure* imag
     shell->incoming_id = id; // id passed into DSO
 	fh->shell = shell;
 	fh_right->shell=shell;
-	allFrameHistory.push_back(shell);
+	allFrameHistory.push_back(shell);//这里一直push，不会出现问题吗
 
 
 	// =========================== make Images / derivatives etc. =========================
@@ -1115,7 +1115,9 @@ void FullSystem::addActiveFrame( ImageAndExposure* image, ImageAndExposure* imag
 		// use initializer!
 		if(coarseInitializer->frameID<0)	// first frame set. fh is kept by coarseInitializer.
 		{
-			coarseInitializer->setFirstStereo(&Hcalib, fh,fh_right);
+			coarseInitializer->setFirstStereo(&Hcalib, fh,fh_right);//在影像的每一层选取点，
+													// 作为后续第二帧匹配生成 pointHessians 和 immaturePoints 的候选点，
+													// 这些点存储在 CoarseInitializer::points 中。每一层点之间都有联系，
 			initialized=true;
 		}
 		return;
