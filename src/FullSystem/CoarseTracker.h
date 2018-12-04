@@ -54,6 +54,7 @@ public:
 			int coarsestLvl, Vec5 minResForAbort,
 			IOWrap::Output3DWrapper* wrap=0);
 
+	//求图像金字塔各层的权重等变量，貌似只初始化一次即可。
 	void setCTRefForFirstFrame(
 			std::vector<FrameHessian*> frameHessians);
 
@@ -62,23 +63,25 @@ public:
 	
 	void makeCoarseDepthForFirstFrame(FrameHessian* fh);
 
+	//求图像金字塔各层的内参矩阵K，及Ki，w，h等参数，可以理解为该函数只运行一次
 	void makeK(
 			CalibHessian* HCalib);
 
 	bool debugPrint, debugPlot;
 
-	Mat33f K[PYR_LEVELS];
-	Mat33f Ki[PYR_LEVELS];
-	float fx[PYR_LEVELS];
-	float fy[PYR_LEVELS];
-	float fxi[PYR_LEVELS];
-	float fyi[PYR_LEVELS];
-	float cx[PYR_LEVELS];
-	float cy[PYR_LEVELS];
-	float cxi[PYR_LEVELS];
-	float cyi[PYR_LEVELS];
-	int w[PYR_LEVELS];
-	int h[PYR_LEVELS];
+	//图像金字塔？可以这样理解吗?[0]表示输入的图像（可能裁剪过）的信息，如：焦距，像主点，图像大小
+	Mat33f K[PYR_LEVELS];//每层图像的内参矩阵。3X3大小。
+	Mat33f Ki[PYR_LEVELS];//每层图像的内参矩阵的逆矩阵。i--inverse
+	float fx[PYR_LEVELS];//每层图像的fx
+	float fy[PYR_LEVELS];//每层图像的fy
+	float fxi[PYR_LEVELS];//对应Ki的[0][0],可以理解为fx的逆吧
+	float fyi[PYR_LEVELS];//对应Ki的[1][1]，可以理解为fy的逆吧
+	float cx[PYR_LEVELS];//每层图像的cx
+	float cy[PYR_LEVELS];//每层图像的cy
+	float cxi[PYR_LEVELS];//对应Ki的[0][2]，可以理解为cx的逆吧
+	float cyi[PYR_LEVELS];//对应Ki的[1][2]，可以理解为cy的逆吧
+	int w[PYR_LEVELS];//w,h,[0]表示原始图像大小，设定的图像大小，每层图像的宽带
+	int h[PYR_LEVELS];//每层图像的高度
 
     void debugPlotIDepthMap(float* minID, float* maxID, std::vector<IOWrap::Output3DWrapper*> &wraps);
     void debugPlotIDepthMapFloat(std::vector<IOWrap::Output3DWrapper*> &wraps);
@@ -95,15 +98,18 @@ public:
 	double firstCoarseRMSE;
 private:
 
+	//求图像金字塔对应的变量，该函数求出的变量内容为函数声明下方的三个float* 变量
 	void makeCoarseDepthL0(std::vector<FrameHessian*> frameHessians, FrameHessian* fh_right, CalibHessian Hcalib);
-	float* idepth[PYR_LEVELS];
-	float* weightSums[PYR_LEVELS];
-	float* weightSums_bak[PYR_LEVELS];
+	float* idepth[PYR_LEVELS];//每层图像对应的逆深度。嗯，这样理解应该没问题
+	float* weightSums[PYR_LEVELS];//每层图像对应的“权重”，嗯，应该可以这样理解
+	float* weightSums_bak[PYR_LEVELS];//类似于上面2个变量，只是不清楚该变量叫什么名字合适。。。
 
 
 	Vec6 calcResAndGS(int lvl, Mat88 &H_out, Vec8 &b_out, SE3 refToNew, AffLight aff_g2l, float cutoffTH);
-	Vec6 calcRes(int lvl, SE3 refToNew, AffLight aff_g2l, float cutoffTH);
-	void calcGSSSE(int lvl, Mat88 &H_out, Vec8 &b_out, SE3 refToNew, AffLight aff_g2l);
+	//初步计算投影误差,为SSE计算求相关变量(warped buffers)
+	//返回值:0误差值 1参与误差计算的像素个数 2相机平移后带来的位置变化3常值0;4相机旋转平移后带来的位置变化 5超出阈值的比例
+	Vec6 calcRes(int lvl, SE3 refToNew, AffLight aff_g2l, float cutoffTH);//计算残差
+	void calcGSSSE(int lvl, Mat88 &H_out, Vec8 &b_out, SE3 refToNew, AffLight aff_g2l);//计算残差的线性化.线性化是优化的前提，在程序中，对于每个点Hessian的计算有三种方式，分别是激活点，线性化点和边缘化点，
 	void calcGS(int lvl, Mat88 &H_out, Vec8 &b_out, SE3 refToNew, AffLight aff_g2l);
 
 	// pc buffers

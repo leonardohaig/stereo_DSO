@@ -181,7 +181,7 @@ int PixelSelector::makeMaps(
 		Eigen::Vector3i n = this->select(fh, map_out,currentPotential, thFactor);
 
 		// sub-select!
-		numHave = n[0]+n[1]+n[2];
+		numHave = n[0]+n[1]+n[2];//选中的点数，和density决定quotia。//然后判断quotia，不合适的话改步长pot再递归。
 		quotia = numWant / numHave;
 
 		// by default we want to over-sample by 40% just to be sure.

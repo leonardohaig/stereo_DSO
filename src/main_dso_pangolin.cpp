@@ -362,11 +362,17 @@ int main( int argc, char** argv )
 		preset=0
 		mode=1*/
 
-	argc = 5;
+	//程序运行起来，最少需要以下4个参数
+	argc = 7;
 	argv[1] = "files=/home/liheng/CLionProjects/StereoSlamData/sequence_01";
     argv[2] = "calib=/home/liheng/CLionProjects/StereoSlamData/sequence_01/para/camera.txt";
     argv[3] = "preset=0";
     argv[4] = "mode=1";
+
+    argv[5] = "start=0";//起止帧
+    argv[6] = "end=100";
+
+
 	for(int i=1; i<argc;i++)
 		parseArgument(argv[i]);
 	
@@ -570,7 +576,7 @@ int main( int argc, char** argv )
         gettimeofday(&tv_end, NULL);
 
 
-        fullSystem->printResult("/home/liheng/CLionProjects/dso/result.txt");
+        fullSystem->printResult("./logs/result.txt");
 
 
         int numFramesProcessed = abs(idsToPlay[0]-idsToPlay.back());

@@ -164,6 +164,7 @@ public:
 
 
 	void setGammaFunction(float* BInv);
+	CalibHessian* getHCalib();
 	void setOriginalCalib(VecXf originalCalib, int originalW, int originalH);
 
 private:
@@ -189,7 +190,7 @@ private:
 	void activatePointsOldFirst();
 	void flagPointsForRemoval();
 	void makeNewTraces(FrameHessian* newFrame, FrameHessian* newFrameRight, float* gtDepth);
-	void initializeFromInitializer(FrameHessian* newFrame);
+	void initializeFromInitializer(FrameHessian* newFrame);// insert the first Frame into FrameHessians
 	void initializeFromInitializer(FrameHessian* newFrame, FrameHessian* newFrame_right);
 	void flagFramesForMarginalization(FrameHessian* newFH);
 

@@ -107,6 +107,7 @@ struct FrameFramePrecalc
 
 
 
+//一个带着状态变量与Hessian信息的帧
 struct FrameHessian
 {
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
@@ -139,9 +140,11 @@ struct FrameHessian
 
 	bool flaggedForMarginalization;
 
+															//包含的所有active点 边缘化点 outlier点
 	std::vector<PointHessian*> pointHessians;				// contains all ACTIVE points.
 	std::vector<PointHessian*> pointHessiansMarginalized;	// contains all MARGINALIZED points (= fully marginalized, usually because point went OOB.)
 	std::vector<PointHessian*> pointHessiansOut;		// contains all OUTLIER points (= discarded.).
+
 	std::vector<PointHessian*> potentialPointHessians;
 	std::vector<ImmaturePoint*> immaturePoints;		// contains all OUTLIER points (= discarded.).
 
@@ -149,6 +152,13 @@ struct FrameHessian
 	Mat66 nullspaces_pose;
 	Mat42 nullspaces_affine;
 	Vec6 nullspaces_scale;
+
+	//Vec10 state_* 状态变量 前6个是xi(t rot) 后4个是光度a b.
+	//CoarseInitializer 将第一帧作为 ref frame，第二帧作为 new frame。
+	// ref frame 的 idepth (inverse depth) 一开始的时候都设置为1，
+	// 随后在确定 new frame 相对 ref frame 之间相对位姿、光度变化过程中设定为正确值。
+	//new frame 相对 ref frame 之间存在 8 个参数需要确定，前 6 个参数是 se(3)，后 2 个参数是光度仿射变换的参数。
+	// 光度仿射变换是将两帧之间辐射值进行对应。对应的参数有两个:a,b。a:曝光量，b：光度学模型的偏置
 
 	// variable info.
 	SE3 worldToCam_evalPT;
@@ -181,7 +191,7 @@ struct FrameHessian
 
 
 	void setStateZero(Vec10 state_zero);
-	inline void setState(Vec10 state)
+	inline void setState(Vec10 state)//更新T
 	{
 
 		this->state = state;
@@ -262,7 +272,7 @@ struct FrameHessian
 	};
 
 
-    void makeImages(float* color, CalibHessian* HCalib);
+    void makeImages(float* color, CalibHessian* HCalib);//构造梯度图像(or构造图像金字塔)
 
 	inline Vec10 getPrior()
 	{
@@ -301,6 +311,7 @@ struct FrameHessian
 
 };
 
+//相机内参
 struct CalibHessian
 {
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW;

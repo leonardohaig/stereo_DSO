@@ -244,13 +244,18 @@ void FullSystem::setGammaFunction(float* BInv)
 	Hcalib.B[255] = 255;
 }
 
+CalibHessian* FullSystem::getHCalib()
+{
+	return &Hcalib;
+}
+
 void FullSystem::printResult(std::string file)
 {
 	boost::unique_lock<boost::mutex> lock(trackMutex);
 	boost::unique_lock<boost::mutex> crlock(shellPoseMutex);
 
 	std::ofstream myfile;
-	myfile.open (file.c_str());
+	myfile.open (file.c_str(),std::ios::trunc | std::ios::out);
 	myfile << std::setprecision(15);
 	int i = 0;
 
@@ -296,29 +301,40 @@ void FullSystem::printResult(std::string file)
 	myfile.close();
 }
 
+
+//1.计算残差
+//2.计算雅克比矩阵
+//3.迭代优化位姿
+//trackNewCoarse 中关心的内容是三帧分别是slast、sprelast、lastF。
+// lastF表示最近的参考帧coarseTracker->lastRef。
+// slast、sprelast表示allFrameHistory中的最新的两帧图像。
 Vec4 FullSystem::trackNewCoarse(FrameHessian* fh, FrameHessian* fh_right)
 {
 
 	assert(allFrameHistory.size() > 0);
 	// set pose initialization.
 
-    printf("the size of allFrameHistory is %d \n", (int)allFrameHistory.size());
+    //printf("the size of allFrameHistory is %d \n", (int)allFrameHistory.size());
 
     // show original images
     for(IOWrap::Output3DWrapper* ow : outputWrapper)
 	{
-		ow->pushStereoLiveFrame(fh,fh_right);
+		ow->pushStereoLiveFrame(fh,fh_right);//将每一帧左右图像“推”到界面上
 	}
 
-	FrameHessian* lastF = coarseTracker->lastRef;
+	FrameHessian* lastF = coarseTracker->lastRef;//最近的参考帧
 
 	AffLight aff_last_2_l = AffLight(0,0);
 
-	std::vector<SE3,Eigen::aligned_allocator<SE3>> lastF_2_fh_tries;
+	std::vector<SE3,Eigen::aligned_allocator<SE3>> lastF_2_fh_tries;//push many tries。
+														// 这些tries是根据上一次的运动量做的估计，分别在上一帧的运动上上增加了许多微调，
+														// 单倍上次运动，双倍运动，上次运动的一半。还有xyz三个轴分别扰动0.05。
 
 	// for first two frames process differently
-	if(allFrameHistory.size() == 2) {
-		initializeFromInitializer(fh);
+	if(allFrameHistory.size() == 2)
+	{
+		initializeFromInitializer(fh);// insert the first Frame into FrameHessians
+										//此处将左图像作为函数参数传入，右图像看起来没有传入。但是函数内部处理时用到了firstRightFrame
 
 		lastF_2_fh_tries.push_back(SE3(Eigen::Matrix<double, 3, 3>::Identity(), Eigen::Matrix<double,3,1>::Zero() ));
 
@@ -355,12 +371,12 @@ Vec4 FullSystem::trackNewCoarse(FrameHessian* fh, FrameHessian* fh_right)
 		coarseTracker->makeK(&Hcalib);
         coarseTracker->setCTRefForFirstFrame(frameHessians);
 
-		lastF = coarseTracker->lastRef;
+		lastF = coarseTracker->lastRef;//更新变量。指针变量，共享内存
 	}
 	else
 	{
 		FrameShell* slast = allFrameHistory[allFrameHistory.size()-2];
-		FrameShell* sprelast = allFrameHistory[allFrameHistory.size()-3];
+		FrameShell* sprelast = allFrameHistory[allFrameHistory.size()-3];//这两个表示最新的两帧图像
 		SE3 slast_2_sprelast;
 		SE3 lastF_2_slast;
 		{	// lock on global pose consistency!
@@ -445,12 +461,16 @@ Vec4 FullSystem::trackNewCoarse(FrameHessian* fh, FrameHessian* fh_right)
 	Vec5 achievedRes = Vec5::Constant(NAN);
 	bool haveOneGood = false;
 	int tryIterations=0;
-	for(unsigned int i=0;i<lastF_2_fh_tries.size();i++)
+	for(unsigned int i=0;i<lastF_2_fh_tries.size();i++)//for 循环完成任务：for every tries, do trackNewestCoarse
 	{
 		AffLight aff_g2l_this = aff_last_2_l;
 		SE3 lastF_2_fh_this = lastF_2_fh_tries[i];
 
 
+		//而trackNewestCoarse执行任务：
+		//根据tries计算对应残差
+		//根据根据残差和梯度计算雅克比矩阵
+		//迭代优化位姿
 		bool trackingIsGood = coarseTracker->trackNewestCoarse(
 				fh, lastF_2_fh_this, aff_g2l_this,
 				pyrLevelsUsed-1,
@@ -563,7 +583,7 @@ void FullSystem::stereoMatch( ImageAndExposure* image, ImageAndExposure* image_r
 
     // =========================== make Images / derivatives etc. =========================
     fh->ab_exposure = image->exposure_time;
-    fh->makeImages(image->image, &Hcalib);
+    fh->makeImages(image->image, &Hcalib);////降采样建立图像金字塔并求出了相应的梯度值
     fh_right->ab_exposure = image_right->exposure_time;
     fh_right->makeImages(image_right->image,&Hcalib);
 
@@ -1106,7 +1126,7 @@ void FullSystem::addActiveFrame( ImageAndExposure* image, ImageAndExposure* imag
 
 	// =========================== make Images / derivatives etc. =========================
 	fh->ab_exposure = image->exposure_time;
-    fh->makeImages(image->image, &Hcalib);
+    fh->makeImages(image->image, &Hcalib);//构造梯度图像//降采样建立图像金字塔并求出了相应的梯度值
 	fh_right->ab_exposure = image_right->exposure_time;
 	fh_right->makeImages(image_right->image,&Hcalib);
 	
@@ -1118,12 +1138,14 @@ void FullSystem::addActiveFrame( ImageAndExposure* image, ImageAndExposure* imag
 			coarseInitializer->setFirstStereo(&Hcalib, fh,fh_right);//在影像的每一层选取点，
 													// 作为后续第二帧匹配生成 pointHessians 和 immaturePoints 的候选点，
 													// 这些点存储在 CoarseInitializer::points 中。每一层点之间都有联系，
+													//该函数作用：通过makeMaps和makePixelStatus作点管理，根据梯度选点
+													//makeNN()建立层内10个最近点和层间parent点的索引
 			initialized=true;
 		}
 		return;
 	}
 	else	// do front-end operation.
-	{
+	{//初始化完成之后，进行跟踪
 		// =========================== SWAP tracking reference?. =========================
 		if(coarseTracker_forNewKF->refFrameID > coarseTracker->refFrameID)
 		{
@@ -1133,7 +1155,12 @@ void FullSystem::addActiveFrame( ImageAndExposure* image, ImageAndExposure* imag
 			coarseTracker_forNewKF=tmp;
 		}
 
-		Vec4 tres = trackNewCoarse(fh,fh_right);
+		//trackNewCoarse函数完成内容：
+		//1.计算残差
+		//2.计算雅克比矩阵
+		//3.迭代优化位姿
+		//看到这样的说法，该函数的返回值--返回4个量 0.光度误差;1.平移后的投影误差;2.常值0;3.平移旋转后的投影误差
+		Vec4 tres = trackNewCoarse(fh,fh_right);//遍历所有active帧，所有 不成熟点分别调用traceOn()，更新不成熟点的逆深度。
 		if(!std::isfinite((double)tres[0]) || !std::isfinite((double)tres[1]) || !std::isfinite((double)tres[2]) || !std::isfinite((double)tres[3]))
         {
             printf("Initial Tracking failed: LOST!\n");
@@ -1164,10 +1191,17 @@ void FullSystem::addActiveFrame( ImageAndExposure* image, ImageAndExposure* imag
 		}
 
         for(IOWrap::Output3DWrapper* ow : outputWrapper)
-           ow->publishCamPose(fh->shell, &Hcalib);
+           ow->publishCamPose(fh->shell, &Hcalib);//将相机位置“发布出去”，用于显示
 
 		lock.unlock();
-		deliverTrackedFrame(fh, fh_right, needToMakeKF);
+		//1.显示图像
+		//2.标记关键帧？等操作
+		deliverTrackedFrame(fh, fh_right, needToMakeKF);//将帧传入后端.
+		                                // 前端与后端的桥梁，它将已经标记为非关键帧或关键帧的帧传入后端进行处理，
+		                                // 对于非关键帧，调用makeNonKeyFrame(fh)：用traceNewCoarse进行点跟踪，然后删除该帧；
+		                                // 对于关键帧，调用makeKeyFrame(fh)：同样先用traceNewCoarse进行点跟踪，
+		                                // 然后调用flagFrmesForMarginalization边际化，
+		                                // 最后把新关键帧的Hessian矩阵、残差加入到优化中，激活一些新的点，进行窗内BA优化。
 		return;
 	}
 }
@@ -1214,7 +1248,7 @@ void FullSystem::deliverTrackedFrame(FrameHessian* fh, FrameHessian* fh_right, b
 }
 
 void FullSystem::mappingLoop()
-{
+{//在实时运行的情况下才运行该线程,跑数据集而且是越快越好的情况下,这个线程基本是用不上的
 	boost::unique_lock<boost::mutex> lock(trackMapSyncMutex);
 
 	while(runMapping)
@@ -1228,12 +1262,12 @@ void FullSystem::mappingLoop()
 		FrameHessian* fh = unmappedTrackedFrames.front();
 		unmappedTrackedFrames.pop_front();
         FrameHessian* fh_right = unmappedTrackedFrames_right.front();
-        unmappedTrackedFrames_right.pop_front();
+        unmappedTrackedFrames_right.pop_front();//有新的帧到来,就开始处理
 
 
 		// guaranteed to make a KF for the very first two tracked frames.
 		if(allKeyFramesHistory.size() <= 2)
-		{
+		{//最新的两个帧都是关键帧
 			lock.unlock();
 			makeKeyFrame(fh, fh_right);
 			lock.lock();
@@ -1242,7 +1276,7 @@ void FullSystem::mappingLoop()
 		}
 
 		if(unmappedTrackedFrames.size() > 3)
-			needToKetchupMapping=true;
+			needToKetchupMapping=true;//需要简化处理一部分帧
 
 		if(unmappedTrackedFrames.size() > 0) // if there are other frames to track, do that first.
 		{
@@ -1254,7 +1288,7 @@ void FullSystem::mappingLoop()
 			{
 				FrameHessian* fh = unmappedTrackedFrames.front();
 				unmappedTrackedFrames.pop_front();
-				{
+				{//如果等待的帧太多就简单处理一下,因为在前段跟踪过后已确定了位姿,就不再优化了.
 					boost::unique_lock<boost::mutex> crlock(shellPoseMutex);
 					assert(fh->shell->trackingRef != 0);
 					fh->shell->camToWorld = fh->shell->trackingRef->camToWorld * fh->shell->camToTrackingRef;
@@ -1266,7 +1300,7 @@ void FullSystem::mappingLoop()
 
 		}
 		else
-		{
+		{//等待处理的队列里没有帧了,那就当做关键帧处理
 			if(setting_realTimeMaxKF || needNewKFAfter >= frameHessians.back()->shell->id)
 			{
 				lock.unlock();

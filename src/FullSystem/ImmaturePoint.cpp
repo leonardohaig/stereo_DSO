@@ -29,6 +29,8 @@
 
 namespace dso
 {
+
+	//构造函数：hostFrame、生成点的位置、梯度和权重
 ImmaturePoint::ImmaturePoint(int u_, int v_, FrameHessian* host_, float type, CalibHessian* HCalib)
 : u(u_), v(v_), host(host_), my_type(type), idepth_min(0), idepth_max(NAN), lastTraceStatus(IPS_UNINITIALIZED)
 {

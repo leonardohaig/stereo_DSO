@@ -162,16 +162,16 @@ extern float setting_trace_minImprovementFactor;
 extern bool setting_render_displayCoarseTrackingFull;
 extern bool setting_render_renderWindowFrames;
 extern bool setting_render_plotTrackingFull;
-extern bool setting_render_display3D;
+extern bool setting_render_display3D;//是否显示轨迹，默认：true
 extern bool setting_render_displayResidual;
-extern bool setting_render_displayVideo;
+extern bool setting_render_displayVideo;//是否显示左右相机图像,默认：true
 extern bool setting_render_displayDepth;
 
 extern bool setting_fullResetRequested;
 
 extern bool setting_debugout_runquiet;
 
-extern bool disableAllDisplay;
+extern bool disableAllDisplay;//不显示所有窗口？默认：false
 extern bool disableReconfigure;
 
 

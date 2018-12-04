@@ -51,6 +51,7 @@ struct FullJacRowT
 	Eigen::Vector2f projectedTo[MAX_RES_PER_POINT];
 };
 
+//某点在两帧间的残差
 class PointFrameResidual
 {
 public:
@@ -86,7 +87,7 @@ public:
 	~PointFrameResidual();
 	PointFrameResidual();
 	PointFrameResidual(PointHessian* point_, FrameHessian* host_, FrameHessian* target_);
-	double linearize(CalibHessian* HCalib);
+	double linearize(CalibHessian* HCalib);//核心函数。..计算雅可比J 推导 --//求雅克比矩阵  并返回总的光度误差
 
 
 	void resetOOB()
@@ -96,7 +97,7 @@ public:
 
 		setState(ResState::IN);
 	};
-	void applyRes( bool copyJacobians);
+	void applyRes( bool copyJacobians);//求和图像相关的雅克比,copyJacobians为TURE时更新点的状态(好点还是坏点)和误差值,如果雅克比不变就算了,变得话再计算和深度相关的雅克比
 
 	void debugPlot();
 

@@ -1,0 +1,4 @@
+#忽略cmake-build-debug文件夹及该文件夹下的内容
+cmake-build-debug/
+cmake-build-release/
+thirdparty/libzip-1.1.1/

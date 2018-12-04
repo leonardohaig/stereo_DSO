@@ -58,9 +58,9 @@ public:
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 	// static values
 	float color[MAX_RES_PER_POINT];
-	float weights[MAX_RES_PER_POINT];
+	float weights[MAX_RES_PER_POINT];//权重
 
-	Mat22f gradH;
+	Mat22f gradH;//梯度
 	Vec2f gradH_ev;
 	Mat22f gradH_eig;
 	float energyTH;

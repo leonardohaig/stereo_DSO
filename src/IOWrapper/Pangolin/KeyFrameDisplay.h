@@ -54,6 +54,17 @@ struct InputPointSparse
 	unsigned char status;
 };
 
+struct ObjectPoint
+{
+    float x;
+    float y;
+    float z;
+};
+struct ObjectSurface
+{
+    int p1, p2, p3;
+};
+
 struct MyVertex
 {
 	float point[3];

@@ -109,18 +109,18 @@ void PangolinDSOViewer::run()
 	pangolin::View& d_kfDepth = pangolin::Display("imgKFDepth")
 	    .SetAspect(w/(float)h);
 
-	pangolin::View& d_video_Right = pangolin::Display("imgKFDepth_Right")
+	pangolin::View& d_video_Right = pangolin::Display("imgKFDepth_Right")//右相机图像窗口--view
 	    .SetAspect(w/(float)h);
 
-	pangolin::View& d_video = pangolin::Display("imgVideo")
+	pangolin::View& d_video = pangolin::Display("imgVideo")//左相机图像窗口--view
 	    .SetAspect(w/(float)h);
 
 	pangolin::View& d_residual = pangolin::Display("imgResidual")
 	    .SetAspect(w/(float)h);
 
 	pangolin::GlTexture texKFDepth(w,h,GL_RGB,false,0,GL_RGB,GL_UNSIGNED_BYTE);
-	pangolin::GlTexture texVideo(w,h,GL_RGB,false,0,GL_RGB,GL_UNSIGNED_BYTE);
-	pangolin::GlTexture texVideo_Right(w,h,GL_RGB,false,0,GL_RGB,GL_UNSIGNED_BYTE);
+	pangolin::GlTexture texVideo(w,h,GL_RGB,false,0,GL_RGB,GL_UNSIGNED_BYTE);//左相机图像窗口. 图像纹理定义
+	pangolin::GlTexture texVideo_Right(w,h,GL_RGB,false,0,GL_RGB,GL_UNSIGNED_BYTE);//右相机图像窗口。图像纹理定义
 	pangolin::GlTexture texResidual(w,h,GL_RGB,false,0,GL_RGB,GL_UNSIGNED_BYTE);
 
 
@@ -243,7 +243,7 @@ void PangolinDSOViewer::run()
 
 
 		openImagesMutex.lock();
-		if(videoImgChanged) {
+		if(videoImgChanged) {//加载图片
 		  texVideo.Upload(internalVideoImg->data,GL_BGR,GL_UNSIGNED_BYTE);
 		  texVideo_Right.Upload(internalVideoImg_Right->data,GL_BGR,GL_UNSIGNED_BYTE);
 		}
@@ -274,15 +274,15 @@ void PangolinDSOViewer::run()
 		}
 
 
-		if(setting_render_displayVideo)
+		if(setting_render_displayVideo)//上一步加载完毕图片之后，这一步进行渲染操作
 		{
 			d_video.Activate();
-			glColor4f(1.0f,1.0f,1.0f,1.0f);
-			texVideo.RenderToViewportFlipY();
+			glColor4f(1.0f,1.0f,1.0f,1.0f); //设置图片显示的色调
+			texVideo.RenderToViewportFlipY(); //图像翻转显示函数.使得图片自下而上渲染
 			
 			d_video_Right.Activate();
-			glColor4f(1.0f,1.0f,1.0f,1.0f);
-			texVideo_Right.RenderToViewportFlipY();
+			glColor4f(1.0f,1.0f,1.0f,1.0f); //设置图片显示的色调
+			texVideo_Right.RenderToViewportFlipY(); //图像翻转显示函数.使得图片自下而上渲染
 		}
 
 		if(setting_render_displayDepth)
@@ -403,7 +403,7 @@ void PangolinDSOViewer::drawConstraints()
 		glLineWidth(1);
 		glBegin(GL_LINES);
 
-		glColor3f(0,1,0);
+		glColor3f(0,1,0);//绿色
 		glBegin(GL_LINES);
 		for(unsigned int i=0;i<connections.size();i++)
 		{
@@ -424,7 +424,7 @@ void PangolinDSOViewer::drawConstraints()
 	if(settings_showActiveConstraints)
 	{
 		glLineWidth(3);
-		glColor3f(0,0,1);
+		glColor3f(0,0,1);//蓝色
 		glBegin(GL_LINES);
 		for(unsigned int i=0;i<connections.size();i++)
 		{
@@ -444,7 +444,7 @@ void PangolinDSOViewer::drawConstraints()
 
 	if(settings_showTrajectory)
 	{
-		float colorRed[3] = {1,0,0};
+		float colorRed[3] = {1,0,0};//红色
 		glColor3f(colorRed[0],colorRed[1],colorRed[2]);
 		glLineWidth(3);
 
@@ -461,15 +461,16 @@ void PangolinDSOViewer::drawConstraints()
 	if(settings_showFullTrajectory)
 	{
 		float colorGreen[3] = {0,1,0};
-		glColor3f(colorGreen[0],colorGreen[1],colorGreen[2]);
-		glLineWidth(3);
+		glColor3f(colorGreen[0],colorGreen[1],colorGreen[2]);//指定了所画线段的颜色：绿色
+		glLineWidth(3);//设置线宽
 
-		glBegin(GL_LINE_STRIP);
+		glBegin(GL_LINE_STRIP);//glBegin()是和glEnd()结合起来使用.
+		                        //GL_LINE_STRIP:绘制从第一个顶点到最后一个顶点依次相连的一组线段，第n和n+1个顶点定义了线段n，绘制n-1条线段
 		for(unsigned int i=0;i<allFramePoses.size();i++)
 		{
 			glVertex3f((float)allFramePoses[i][0],
 					(float)allFramePoses[i][1],
-					(float)allFramePoses[i][2]);
+					(float)allFramePoses[i][2]);//3:三维坐标，f：float型。该函数绘制了一个点
 		}
 		glEnd();
 	}
@@ -585,6 +586,7 @@ void PangolinDSOViewer::pushLiveFrame(FrameHessian* image)
 	videoImgChanged=true;
 }
 
+//将每一帧左右图像“推”到界面上
 void PangolinDSOViewer::pushStereoLiveFrame(FrameHessian* image,FrameHessian* image_right)
 {
 	if(!setting_render_displayVideo) return;
@@ -592,11 +594,13 @@ void PangolinDSOViewer::pushStereoLiveFrame(FrameHessian* image,FrameHessian* im
 
 	boost::unique_lock<boost::mutex> lk(openImagesMutex);
 
-	for(int i=0;i<w*h;i++){
+	for(int i=0;i<w*h;i++)
+	{
 		internalVideoImg->data[i][0] =
 		internalVideoImg->data[i][1] =
 		internalVideoImg->data[i][2] =
 			image->dI[i][0]*0.8 > 255.0f ? 255.0 : image->dI[i][0]*0.8;
+
 		internalVideoImg_Right->data[i][0] = 
 		internalVideoImg_Right->data[i][1] = 
 		internalVideoImg_Right->data[i][2] = 

@@ -163,6 +163,8 @@ typedef Eigen::Matrix<double,14,1> Vec14;
 
 
 
+//AffLight表示光度模型和曝光量的两个参数a，曝光量。b光度学模型的偏置。
+//可以理解为光度仿射变换。嗯，可以这样理解
 // transforms points from one frame to another.
 struct AffLight
 {

@@ -188,7 +188,7 @@ float freeDebugParam5 = 1;
 bool disableReconfigure=false;
 bool debugSaveImages = false;
 bool multiThreading = true;
-bool disableAllDisplay = false;
+bool disableAllDisplay = false;//不显示所有窗口？默认：false
 bool setting_onlyLogKFPoses = false;
 bool setting_logStuff = true;
 
@@ -200,9 +200,9 @@ bool goStepByStep = false;
 bool setting_render_displayCoarseTrackingFull=false;
 bool setting_render_renderWindowFrames=true;
 bool setting_render_plotTrackingFull = false;
-bool setting_render_display3D = true;
+bool setting_render_display3D = true;//是否显示轨迹，默认：true
 bool setting_render_displayResidual = true;
-bool setting_render_displayVideo = true;
+bool setting_render_displayVideo = true;//是否显示左右相机图像,默认：true
 bool setting_render_displayDepth = true;
 
 bool setting_fullResetRequested = false;

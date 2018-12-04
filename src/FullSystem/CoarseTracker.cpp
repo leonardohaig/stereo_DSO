@@ -497,7 +497,8 @@ void CoarseTracker::makeCoarseDepthL0(std::vector<FrameHessian*> frameHessians, 
 	}
 
 }
-    
+
+//计算残差的线性化.线性化是优化的前提，在程序中，对于每个点Hessian的计算有三种方式，分别是激活点，线性化点和边缘化点，
 void CoarseTracker::calcGSSSE(int lvl, Mat88 &H_out, Vec8 &b_out, SE3 refToNew, AffLight aff_g2l)
 {
 	acc.initialize();
@@ -559,7 +560,7 @@ void CoarseTracker::calcGSSSE(int lvl, Mat88 &H_out, Vec8 &b_out, SE3 refToNew, 
 
 
 
-
+//计算残差
 Vec6 CoarseTracker::calcRes(int lvl, SE3 refToNew, AffLight aff_g2l, float cutoffTH)
 {
 	float E = 0;
@@ -782,18 +783,18 @@ bool CoarseTracker::trackNewestCoarse(
 	{
 		Mat88 H; Vec8 b;
 		float levelCutoffRepeat=1;
-		Vec6 resOld = calcRes(lvl, refToNew_current, aff_g2l_current, setting_coarseCutoffTH*levelCutoffRepeat);
+		Vec6 resOld = calcRes(lvl, refToNew_current, aff_g2l_current, setting_coarseCutoffTH*levelCutoffRepeat);//计算残差
 
 		while(resOld[5] > 0.6 && levelCutoffRepeat < 50)
 		{
 			levelCutoffRepeat*=2;
-			resOld = calcRes(lvl, refToNew_current, aff_g2l_current, setting_coarseCutoffTH*levelCutoffRepeat);
+			resOld = calcRes(lvl, refToNew_current, aff_g2l_current, setting_coarseCutoffTH*levelCutoffRepeat);//计算残差
 
             if(!setting_debugout_runquiet)
                 printf("INCREASING cutoff to %f (ratio is %f)!\n", setting_coarseCutoffTH*levelCutoffRepeat, resOld[5]);
 		}
 
-		calcGSSSE(lvl, H, b, refToNew_current, aff_g2l_current);
+		calcGSSSE(lvl, H, b, refToNew_current, aff_g2l_current);//计算残差的线性化
 
 		float lambda = 0.01;
 

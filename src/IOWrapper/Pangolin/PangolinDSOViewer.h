@@ -73,7 +73,7 @@ public:
 
 
 	virtual void pushLiveFrame(FrameHessian* image);
-	virtual void pushStereoLiveFrame(FrameHessian* image,FrameHessian* image_right);
+	virtual void pushStereoLiveFrame(FrameHessian* image,FrameHessian* image_right);//将每一帧左右图像“推”到界面上
 	virtual void pushDepthImage(MinimalImageB3* image);
     virtual bool needPushDepthImage();
 
@@ -93,12 +93,13 @@ private:
 
 
 	// images rendering
-	boost::mutex openImagesMutex;
-	MinimalImageB3* internalVideoImg;
+	boost::mutex openImagesMutex;//左右相机图像显示 同步锁
+	MinimalImageB3* internalVideoImg;//界面展示图像：左相机图像
 	MinimalImageB3* internalKFImg;
 	MinimalImageB3* internalResImg;
-	MinimalImageB3* internalVideoImg_Right;
-	bool videoImgChanged, kfImgChanged, resImgChanged;
+	MinimalImageB3* internalVideoImg_Right;//界面展示图像：右相机图像
+	bool videoImgChanged, //界面展示的左右相机原始图像是否有变化（加载），若变化，则界面上将进行更新
+			kfImgChanged, resImgChanged;
 
 
 
@@ -116,7 +117,7 @@ private:
 	bool settings_showKFCameras;
 	bool settings_showCurrentCamera;
 	bool settings_showTrajectory;
-	bool settings_showFullTrajectory;
+	bool settings_showFullTrajectory;//显示轨迹
 	bool settings_showActiveConstraints;
 	bool settings_showAllConstraints;
 
