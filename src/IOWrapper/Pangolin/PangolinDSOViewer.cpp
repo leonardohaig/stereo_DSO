@@ -174,7 +174,7 @@ void PangolinDSOViewer::run()
 	pangolin::Var<double> settings_mapFps("ui.KF fpS",0,0,0,false);
 
     // show ground truth
-    std::string gtPath = "/home/liheng/CLionProjects/dso/05.txt";
+    std::string gtPath = "/home/liheng/CLionProjects/StereoSlamData/data_odometry/00/00.txt";
     std::ifstream ReadFile(gtPath.c_str());
     std::string temp;
     std::string delim (" ");
@@ -186,10 +186,13 @@ void PangolinDSOViewer::run()
     {
         split(temp, delim, results);
         for(int i = 0; i < 3; i++)
+        {
             for(int j = 0; j < 4; j++)
             {
                 gtCam(i,j) = atof(results[4*i + j].c_str());
             }
+        }
+
         gtCam(3,0) = 0;
         gtCam(3,1) = 0;
         gtCam(3,2) = 0;
@@ -199,7 +202,6 @@ void PangolinDSOViewer::run()
         matrix_result.push_back(gtCam);
 
     }
-    ReadFile.close();
 
     float yellow[3] = {1,1,0};
 
@@ -228,6 +230,7 @@ void PangolinDSOViewer::run()
 
 			}
 
+#if 1
             for(int i = 0; i < matrix_result.size(); i++)
             {
 
@@ -235,6 +238,7 @@ void PangolinDSOViewer::run()
                 fh->drawGTCam(matrix_result[i], 5, yellow, 0.1);
                 delete(fh);
             }
+#endif
 
 			if(this->settings_showCurrentCamera) currentCam->drawCam(2,0,0.2);
 			drawConstraints();

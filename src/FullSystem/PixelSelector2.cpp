@@ -358,8 +358,17 @@ Eigen::Vector3i PixelSelector::select(const FrameHessian* const fh,
 
 					if(xf<4 || xf>=w-5 || yf<4 || yf>h-4) continue;
 
-
+#if 0
+					//pixelTH0的修改缘由来源于
+					// https://github.com/JakobEngel/dso/pull/158
+					//这4行是我按照链接中的建议修改的
+					int thIdx = (xf>>5) + (yf>>5) * thsStep;
+					int maxThIdx = (w >> 5) * (h >> 5);
+					if (thIdx >= maxThIdx) continue;
+					float pixelTH0 = thsSmoothed[thIdx];
+#else
 					float pixelTH0 = thsSmoothed[(xf>>5) + (yf>>5) * thsStep];
+#endif
 					float pixelTH1 = pixelTH0*dw1; //DownweightPerPixel = 0.75
 					float pixelTH2 = pixelTH1*dw2;
 

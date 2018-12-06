@@ -21,6 +21,22 @@
 * along with DSO. If not, see <http://www.gnu.org/licenses/>.
 */
 
+//关于保存地图的讨论：
+//https://github.com/JakobEngel/dso/issues/87
+//https://github.com/JakobEngel/dso/issues/78
+
+//https://github.com/JakobEngel/dso/issues/84--DSO并不是一个完整的SLAM，是一个基于关键帧的视觉里程计，没有永久地图的概念
+
+//https://github.com/JakobEngel/dso/issues/57--该代码使用了intel指令集，不能在TX1等arm板上运行，
+// 若需要可以参考：https://github.com/israelshirk/dso
+
+//DSO在VS下配置编译：https://mp.weixin.qq.com/s/5k_lX7Dof65AzI7uBC9HUg
+
+//输出图像尺寸大小选择16的倍数比较合适
+//I ran the DSO with my own Dataset and it's quite promising.
+//During several changes of every parameters, I found DSO performs
+// best and the pointclouds are the most accurate if
+// my images output sizes are the multiple integer of 16. Like 640 x 480 or 1120 x 800.
 
 
 #include <thread>
@@ -69,6 +85,8 @@ float playbackSpeed=0;	// 0 for linearize (play as fast as possible, while seque
 bool preload=false;
 bool useSampleOutput=false;
 
+std::atomic<bool> exThreadKeepRunning(true);
+
 
 int mode=0;
 
@@ -92,7 +110,10 @@ void exitThread()
 	sigaction(SIGINT, &sigIntHandler, NULL);
 
 	firstRosSpin=true;
-	while(true) pause();
+	//while(true) pause();
+	//从上面一行修改为该行
+	while(exThreadKeepRunning)
+		std::this_thread::sleep_for (std::chrono::milliseconds(10));
 }
 
 void settingsDefault(int preset)
@@ -122,8 +143,7 @@ void settingsDefault(int preset)
         setting_maxShiftWeightR= 0.04f * (640 + 128);    // original is 0.0f * (640+480);
         setting_maxShiftWeightRT= 0.02f * (640 + 128);  // original is 0.02f * (640+480);
 
-		//setting_logStuff = false;
-        setting_logStuff = true;//I modify it to true to save file
+		setting_logStuff = false;
 	}
 
 	if(preset == 2 || preset == 3)
@@ -362,18 +382,21 @@ int main( int argc, char** argv )
 		preset=0
 		mode=1*/
 
-	//程序运行起来，最少需要以下4个参数
-	argc = 7;
-	argv[1] = "files=/home/liheng/CLionProjects/StereoSlamData/sequence_01";
-    argv[2] = "calib=/home/liheng/CLionProjects/StereoSlamData/sequence_01/para/camera.txt";
-    argv[3] = "preset=0";
-    argv[4] = "mode=1";
+	//程序运行起来，最少需要4个参数
+	//argc = 7;
+	int idx = 0;
+	argv[++idx] = "files=/home/liheng/CLionProjects/StereoSlamData/data_odometry/00";
+    argv[++idx] = "calib=/home/liheng/CLionProjects/StereoSlamData/data_odometry/camera.txt";
+    argv[++idx] = "preset=0";
+    argv[++idx] = "mode=1";
 
-    argv[5] = "start=0";//起止帧
-    argv[6] = "end=100";
+    //argv[++idx] = "start=1000";//起止帧
+   // argv[++idx] = "end=100";
+    //argv[++idx] = "sampleoutput=1";
 
 
-	for(int i=1; i<argc;i++)
+
+	for(int i=1; i<idx+1;i++)
 		parseArgument(argv[i]);
 	
 	// hook crtl+C.
@@ -577,6 +600,8 @@ int main( int argc, char** argv )
 
 
         fullSystem->printResult("./logs/result.txt");
+		std::cout<<"结果存储完成！"<<std::endl;
+		fullSystem->saveAllKeyFrames("./logs/keyframes.txt");
 
 
         int numFramesProcessed = abs(idsToPlay[0]-idsToPlay.back());
@@ -612,7 +637,8 @@ int main( int argc, char** argv )
     if(viewer != 0)
         viewer->run();
 
-    runthread.join();
+    if( runthread.joinable() )
+    	runthread.join();
 
 	for(IOWrap::Output3DWrapper* ow : fullSystem->outputWrapper)
 	{
@@ -625,6 +651,12 @@ int main( int argc, char** argv )
 
 	printf("DELETE READER!\n");
 	delete reader;
+
+	//关闭退出线程
+	// shutdown exThread
+	exThreadKeepRunning = false;
+	if( exThread.joinable() )
+		exThread.join();
 
 	printf("EXIT NOW!\n");
 	return 0;

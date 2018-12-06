@@ -26,11 +26,11 @@ find_package(OpenCV QUIET)
 
 # flags
 add_definitions("-DENABLE_SSE")
-set(CMAKE_CXX_FLAGS
-   "${SSE_FLAGS} -O3 -fPIC -g -std=c++0x -march=native"
-	#	"${SSE_FLAGS} -O0 -fPIC -g -std=c++0x -march=native"#here I modify to O0,so that gdb not 乱序
-#   "${SSE_FLAGS} -O3 -g -std=c++0x -fno-omit-frame-pointer"
-)
+#set(CMAKE_CXX_FLAGS
+#   "${SSE_FLAGS} -O3 -fPIC -g -std=c++0x -march=native"
+#	#	"${SSE_FLAGS} -O0 -fPIC -g -std=c++0x -march=native"#here I modify to O0,so that gdb not 乱序
+##   "${SSE_FLAGS} -O3 -g -std=c++0x -fno-omit-frame-pointer"
+#)
 
 # Sources files
 set(dso_SOURCE_FILES
@@ -120,8 +120,14 @@ if (OpenCV_FOUND AND Pangolin_FOUND)
     target_link_libraries(dso_dataset dso boost_system boost_thread cxsparse ${LIBZIP_LIBRARY} ${Pangolin_LIBRARIES} ${OpenCV_LIBS})
 
 	add_executable(dso_show_result ${PROJECT_SOURCE_DIR}/src/show_result_main.cpp )
-	target_link_libraries(dso_show_result dso boost_system cxsparse ${BOOST_THREAD_LIBRARY} ${LIBZIP_LIBRARY} ${Pangolin_LIBRARIES} ${OpenCV_LIBS})
+	target_link_libraries(dso_show_result dso boost_system cxsparse ${BOOST_THREAD_LIBRARY} ${LIBZIP_LIBRARY} ${Pangolin_LIBRARIES} ${OpenCV_LIBS}
+			-lboost_thread
+			#${CMAKE_THREAD_LIBS_INIT}
+			)
 else()
 	message("--- not building dso_dataset, since either don't have openCV or Pangolin.")
 endif()
+
+add_executable(PangolinDisplay_test ${PROJECT_SOURCE_DIR}/src/test/PangolinDisplay_test.cpp)
+target_link_libraries(PangolinDisplay_test dso boost_system boost_thread cxsparse ${PCL_LIBRARIES} ${LIBZIP_LIBRARY} ${Pangolin_LIBRARIES} ${OpenCV_LIBS})
 

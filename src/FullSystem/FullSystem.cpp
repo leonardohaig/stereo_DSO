@@ -300,6 +300,28 @@ void FullSystem::printResult(std::string file)
 	}
 	myfile.close();
 }
+void FullSystem::saveAllKeyFrames(std::string file)
+{
+    static int num = 0;
+    std::ofstream* os= new std::ofstream();
+    os->open(file.c_str(),std::ios::trunc | std::ios::out);
+    if(os)
+    {
+        std::cout << std::endl << "success to open keyframes.txt file" << std::endl;
+        os->clear();
+    }
+
+    os->precision(10);
+
+    boost::unique_lock<boost::mutex> lock(mapMutex);
+    for(FrameShell* fm : allKeyFramesHistory)
+        if(fm && fm->trackingRef)
+            (*os)<<"第"<<num++<<"个  "<<"current id = "<<fm->id<<"   reference id = "<<fm->trackingRef->id<<std::endl;
+
+    os->close();
+    delete os;
+}
+
 
 
 //1.计算残差
@@ -1323,6 +1345,10 @@ void FullSystem::mappingLoop()
 void FullSystem::blockUntilMappingIsFinished()
 {
 	boost::unique_lock<boost::mutex> lock(trackMapSyncMutex);
+    // 检查 mapping thread 是否已经结束了
+    //该行属于修改bug性质
+    if (!runMapping) { return; }
+
 	runMapping = false;
 	trackedFrameSignal.notify_all();
 	lock.unlock();

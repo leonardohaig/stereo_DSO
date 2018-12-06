@@ -125,6 +125,8 @@ void FrameHessian::release()
 }
 
 
+//为各层金字塔图像计算梯度
+//梯度为当前像素上下光强度差方与左右光强差方之和。先计算第0层的梯度，其他层的像素光强通过上一层均值采样得到。
 void FrameHessian::makeImages(float* color, CalibHessian* HCalib)
 {
 

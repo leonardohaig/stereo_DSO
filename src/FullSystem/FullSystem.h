@@ -147,7 +147,7 @@ public:
 	void stereoMatch(ImageAndExposure* image, ImageAndExposure* image_right, int id, cv::Mat &idepthMap);
 
 
-
+    void saveAllKeyFrames(std::string file);//添加，显示结果
 	void printResult(std::string file);
 
 	void debugPlot(std::string name);
