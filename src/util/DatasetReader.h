@@ -39,7 +39,6 @@
 	#include "zip.h"
 #endif
 
-#include <boost/thread.hpp>
 
 using namespace dso;
 

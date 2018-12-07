@@ -2,32 +2,38 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
     <generated>
-      <config projectName="SDSO" targetName="dso_show_result" />
+      <config projectName="SDSO" targetName="dso" />
       <config projectName="SDSO" targetName="dso_dataset" />
       <config projectName="SDSO" targetName="PangolinDisplay_test" />
-      <config projectName="SDSO" targetName="dso" />
+      <config projectName="SDSO" targetName="dso_show_result" />
     </generated>
   </component>
   <component name="CMakeSettings">
     <configurations>
-      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" BUILD_OPTIONS="-j 2" />
-      <configuration PROFILE_NAME="Release" CONFIG_NAME="Release" BUILD_OPTIONS="-j 2" />
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" BUILD_OPTIONS="-j 4" />
+      <configuration PROFILE_NAME="Release" CONFIG_NAME="Release" BUILD_OPTIONS="-j 4" />
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2fcbd212-4b06-4153-8424-bec5f3e29b2a" name="Default Changelist" comment="adding show results">
-      <change afterPath="$PROJECT_DIR$/src/test/PangolinDisplay_test.cpp" afterDir="false" />
+    <list default="true" id="2fcbd212-4b06-4153-8424-bec5f3e29b2a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FullSystem/FullSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/FullSystem/FullSystem.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FullSystem/FullSystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/FullSystem/FullSystem.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FullSystem/HessianBlocks.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/FullSystem/HessianBlocks.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FullSystem/PixelSelector2.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/FullSystem/PixelSelector2.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FullSystem/FullSystemOptimize.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/FullSystem/FullSystemOptimize.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IOWrapper/OpenCV/ImageDisplay_OpenCV.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/IOWrapper/OpenCV/ImageDisplay_OpenCV.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/IOWrapper/OutputWrapper/SampleOutputWrapper.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/IOWrapper/OutputWrapper/SampleOutputWrapper.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IOWrapper/Pangolin/KeyFrameDisplay.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/IOWrapper/Pangolin/KeyFrameDisplay.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/IOWrapper/Pangolin/PangolinDSOViewer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/IOWrapper/Pangolin/PangolinDSOViewer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IOWrapper/Pangolin/PangolinDSOViewer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/IOWrapper/Pangolin/PangolinDSOViewer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OptimizationBackend/AccumulatedSCHessian.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/OptimizationBackend/AccumulatedSCHessian.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OptimizationBackend/AccumulatedTopHessian.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/OptimizationBackend/AccumulatedTopHessian.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OptimizationBackend/EnergyFunctional.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/OptimizationBackend/EnergyFunctional.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main_dso_pangolin.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main_dso_pangolin.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/show_result_main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/show_result_main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/DatasetReader.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/DatasetReader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/IndexThreadReduce.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/IndexThreadReduce.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/settings.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/settings.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/cmake-build-release/" />
@@ -37,7 +43,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Release" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FUSProjectUsageTrigger">
     <session id="-179379199">
       <usages-collector id="statistics.lifecycle.project">
@@ -47,48 +53,49 @@
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.21" value="2" />
-          <entry key="project.open.time.23" value="2" />
+          <entry key="project.open.time.23" value="3" />
           <entry key="project.open.time.24" value="1" />
+          <entry key="project.open.time.26" value="1" />
           <entry key="project.open.time.27" value="2" />
-          <entry key="project.opened" value="10" />
+          <entry key="project.opened" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="cmath" value="2" />
-          <entry key="cpp" value="39" />
-          <entry key="dso_dataset (disassembly)" value="7" />
+          <entry key="cpp" value="46" />
+          <entry key="dso_dataset (disassembly)" value="10" />
           <entry key="gitignore" value="1" />
-          <entry key="h" value="56" />
-          <entry key="hpp" value="5" />
+          <entry key="h" value="70" />
+          <entry key="hpp" value="6" />
           <entry key="png" value="2" />
-          <entry key="txt" value="20" />
+          <entry key="txt" value="22" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CMakeLists.txt" value="10" />
-          <entry key="Disassembly" value="7" />
+          <entry key="CMakeLists.txt" value="12" />
+          <entry key="Disassembly" value="10" />
           <entry key="Image" value="2" />
-          <entry key="ObjectiveC" value="102" />
+          <entry key="ObjectiveC" value="124" />
           <entry key="PLAIN_TEXT" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cpp" value="9004" />
+          <entry key="cpp" value="9141" />
           <entry key="gitignore" value="30" />
-          <entry key="h" value="1202" />
+          <entry key="h" value="1282" />
           <entry key="mm" value="14" />
-          <entry key="txt" value="66" />
+          <entry key="txt" value="356" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="CMakeLists.txt" value="47" />
+          <entry key="CMakeLists.txt" value="229" />
           <entry key="Doxygen file" value="1" />
-          <entry key="ObjectiveC" value="10219" />
-          <entry key="PLAIN_TEXT" value="49" />
+          <entry key="ObjectiveC" value="10436" />
+          <entry key="PLAIN_TEXT" value="157" />
         </counts>
       </usages-collector>
     </session>
@@ -96,27 +103,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/FullSystem/FullSystem.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6563">
-              <caret line="1351" column="23" lean-forward="true" selection-start-line="1351" selection-start-column="23" selection-end-line="1351" selection-end-column="23" />
-              <folding>
-                <element signature="e#5515#5987#0" />
-                <marker date="1544082743307" expanded="false" signature="9445:13357" ph="{...}" />
-                <marker date="1544082743307" expanded="false" signature="9790:13208" ph="{...}" />
-                <marker date="1544082743307" expanded="false" signature="13365:20367" ph="{...}" />
-                <marker date="1544082743307" expanded="false" signature="20940:22646" ph="{...}" />
-                <marker date="1544082743307" expanded="true" signature="46894:48627" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/IOWrapper/Pangolin/PangolinDSOViewer.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
+            <state relative-caret-position="1512">
+              <caret line="223" column="13" selection-start-line="223" selection-start-column="13" selection-end-line="223" selection-end-column="13" />
               <folding>
                 <element signature="e#921#951#0" expanded="true" />
               </folding>
@@ -125,72 +115,83 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/util/Undistort.cpp">
+        <entry file="file://$PROJECT_DIR$/src/OptimizationBackend/EnergyFunctional.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="347">
-              <caret line="714" column="28" selection-start-line="714" selection-start-column="16" selection-end-line="714" selection-end-column="28" />
+            <state relative-caret-position="7758">
+              <caret line="431" column="29" selection-start-line="431" selection-start-column="29" selection-end-line="431" selection-end-column="29" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/IOWrapper/Pangolin/KeyFrameDisplay.cpp">
+        <entry file="file://$PROJECT_DIR$/src/OptimizationBackend/AccumulatedSCHessian.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="319" column="100" selection-start-line="319" selection-start-column="100" selection-end-line="319" selection-end-column="100" />
+            <state relative-caret-position="1908">
+              <caret line="106" column="23" selection-start-line="106" selection-start-column="12" selection-end-line="106" selection-end-column="23" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+        <entry file="file://$PROJECT_DIR$/src/OptimizationBackend/AccumulatedTopHessian.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="26" column="7" selection-start-line="26" selection-start-column="7" selection-end-line="26" selection-end-column="7" />
+            <state relative-caret-position="2088">
+              <caret line="116" column="37" selection-start-line="116" selection-start-column="37" selection-end-line="116" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/show_result_main.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4662">
+              <caret line="259" column="5" selection-start-line="259" selection-start-column="5" selection-end-line="259" selection-end-column="5" />
+              <folding>
+                <marker date="1544087432410" expanded="false" signature="11440:22307" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="161">
+              <caret line="168" lean-forward="true" selection-start-line="168" selection-end-line="168" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main_dso_pangolin.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="658" column="24" lean-forward="true" selection-start-line="658" selection-start-column="24" selection-end-line="658" selection-end-column="24" />
+            <state relative-caret-position="347">
+              <caret line="110" column="31" selection-start-line="110" selection-start-column="31" selection-end-line="110" selection-end-column="31" />
               <folding>
-                <element signature="e#2445#4289#0" />
-                <marker date="1544083097173" expanded="false" signature="11060:18318" ph="{...}" />
+                <element signature="e#1598#1615#0" expanded="true" />
+                <marker date="1544087511504" expanded="false" signature="11069:18327" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/FullSystem/PixelSelector2.cpp">
+        <entry file="file://$PROJECT_DIR$/src/util/IndexThreadReduce.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="364" column="59" lean-forward="true" selection-start-line="364" selection-start-column="59" selection-end-line="364" selection-end-column="59" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/IOWrapper/OutputWrapper/SampleOutputWrapper.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-762">
-              <caret line="137" column="37" selection-start-line="137" selection-start-column="21" selection-end-line="137" selection-end-column="37" />
+            <state relative-caret-position="1044">
+              <caret line="58" column="27" selection-start-line="58" selection-start-column="27" selection-end-line="58" selection-end-column="27" />
               <folding>
-                <element signature="e#3257#4665#0" expanded="true" />
-                <element signature="e#5050#6270#0" expanded="true" />
+                <element signature="e#934#963#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/util/settings.cpp">
+        <entry file="file://$PROJECT_DIR$/src/IOWrapper/Pangolin/PangolinDSOViewer.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
+            <state relative-caret-position="1638">
+              <caret line="91" column="7" selection-start-line="91" selection-start-column="7" selection-end-line="91" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -199,36 +200,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>texResidual</find>
-      <find>internalResImg</find>
-      <find>d_residual</find>
-      <find>makeim</find>
-      <find>loop</find>
-      <find>SampleMethod</find>
-      <find>CustomType</find>
-      <find>drawConstraints</find>
-      <find>keyframes</find>
-      <find>allFramePoses</find>
-      <find>CurrCam</find>
-      <find>settings_showCurrentCamera</find>
-      <find>useSampleOutput</find>
-      <find>JOINED Pangolin thread</find>
-      <find>setting_logStuff</find>
-      <find>makeImages</find>
-      <find>matrix_result</find>
-      <find>setting_render_display3D</find>
-      <find>thirdparty</find>
-      <find>sophus</find>
-      <find>drawGTCam</find>
-      <find>rectification mode</find>
-      <find>setting_kfGlobalWeight</find>
-      <find>setting_maxShiftWeightT</find>
-      <find>publishCamPose</find>
-      <find>publishKeyframes</find>
-      <find>nPars == 8</find>
-      <find>if(xf&lt;4</find>
       <find>blockUntilMappingIsFinished</find>
       <find>printf(&quot;DELETE READER!\n&quot;);</find>
+      <find>exThreadKeepRunning</find>
+      <find>mappingThread</find>
+      <find>FullSystem::printResult</find>
+      <find>mapMutex</find>
+      <find>trackMapSyncMutex</find>
+      <find>shellPoseMutex</find>
+      <find>trackMutex</find>
+      <find>coarseTrackerSwapMutex</find>
+      <find>treadReduce.reduce(</find>
+      <find>treadReduce.reduce</find>
+      <find>openCVdisplayMutex</find>
+      <find>openImagesMutex</find>
+      <find>if(startRunThread)</find>
+      <find>model3DMutex</find>
+      <find>red-&gt;reduce(boost</find>
+      <find>red-&gt;reduce(</find>
+      <find>red-&gt;reduce</find>
+      <find>exThread			std::placeholders::_2, 				std::placeholders::_3, 				std::placeholders::_4</find>
+      <find>exThread</find>
+      <find>bind(&amp;IndexThreadReduce</find>
+      <find>callPerIndex</find>
+      <find>workerThreads</find>
+      <find>exMutex</find>
+      <find>.wait(</find>
+      <find>CMAKE_SYSTEM_NAME</find>
+      <find>boost</find>
+      <find>fh-&gt;drawCam(1,blue</find>
+      <find>#include &quot;util/nanoflann.h&quot;</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -241,7 +242,6 @@
         <option value="$PROJECT_DIR$/src/FullSystem/ImmaturePoint.cpp" />
         <option value="$PROJECT_DIR$/src/util/settings.h" />
         <option value="$PROJECT_DIR$/src/util/settings.cpp" />
-        <option value="$PROJECT_DIR$/src/IOWrapper/Pangolin/PangolinDSOViewer.h" />
         <option value="$PROJECT_DIR$/src/util/NumType.h" />
         <option value="$PROJECT_DIR$/src/FullSystem/HessianBlocks.h" />
         <option value="$PROJECT_DIR$/src/FullSystem/CoarseTracker.cpp" />
@@ -249,17 +249,24 @@
         <option value="$PROJECT_DIR$/src/FullSystem/Residuals.h" />
         <option value="$PROJECT_DIR$/src/IOWrapper/Pangolin/KeyFrameDisplay.h" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/FullSystem/FullSystem.h" />
-        <option value="$PROJECT_DIR$/src/show_result_main.cpp" />
         <option value="$PROJECT_DIR$/src/FullSystem/HessianBlocks.cpp" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/src/test/PangolinDisplay_test.cpp" />
         <option value="$PROJECT_DIR$/src/IOWrapper/Pangolin/KeyFrameDisplay.cpp" />
-        <option value="$PROJECT_DIR$/src/IOWrapper/Pangolin/PangolinDSOViewer.cpp" />
         <option value="$PROJECT_DIR$/src/IOWrapper/OutputWrapper/SampleOutputWrapper.h" />
         <option value="$PROJECT_DIR$/src/FullSystem/PixelSelector2.cpp" />
+        <option value="$PROJECT_DIR$/src/IOWrapper/OpenCV/ImageDisplay_OpenCV.cpp" />
+        <option value="$PROJECT_DIR$/src/FullSystem/FullSystem.h" />
+        <option value="$PROJECT_DIR$/src/FullSystem/FullSystemOptimize.cpp" />
         <option value="$PROJECT_DIR$/src/FullSystem/FullSystem.cpp" />
+        <option value="$PROJECT_DIR$/src/IOWrapper/Pangolin/PangolinDSOViewer.h" />
+        <option value="$PROJECT_DIR$/src/OptimizationBackend/EnergyFunctional.cpp" />
+        <option value="$PROJECT_DIR$/src/OptimizationBackend/AccumulatedSCHessian.h" />
+        <option value="$PROJECT_DIR$/src/OptimizationBackend/AccumulatedTopHessian.h" />
+        <option value="$PROJECT_DIR$/src/show_result_main.cpp" />
+        <option value="$PROJECT_DIR$/src/util/IndexThreadReduce.h" />
         <option value="$PROJECT_DIR$/src/main_dso_pangolin.cpp" />
+        <option value="$PROJECT_DIR$/src/IOWrapper/Pangolin/PangolinDSOViewer.cpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
       </list>
     </option>
   </component>
@@ -271,8 +278,8 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="67" />
-    <option name="y" value="25" />
+    <option name="x" value="374" />
+    <option name="y" value="27" />
     <option name="width" value="917" />
     <option name="height" value="789" />
   </component>
@@ -281,7 +288,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -298,20 +304,7 @@
               <item name="SDSO" type="b2602c69:ProjectViewProjectNode" />
               <item name="stereo_DSO" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="IOWrapper" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SDSO" type="b2602c69:ProjectViewProjectNode" />
-              <item name="stereo_DSO" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="IOWrapper" type="462c0819:PsiDirectoryNode" />
-              <item name="Pangolin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SDSO" type="b2602c69:ProjectViewProjectNode" />
-              <item name="stereo_DSO" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="FullSystem" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="SDSO" type="b2602c69:ProjectViewProjectNode" />
@@ -322,12 +315,13 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../dso_yuhan" />
-    <property name="settings.editor.selected.configurable" value="fileTemplates" />
+    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -400,22 +394,31 @@
       <workItem from="1544000830631" duration="4439000" />
       <workItem from="1544056513417" duration="5873000" />
       <workItem from="1544065054511" duration="1579000" />
-      <workItem from="1544067095609" duration="11506000" />
+      <workItem from="1544067095609" duration="12678000" />
+      <workItem from="1544084863006" duration="3160000" />
+      <workItem from="1544088639956" duration="8215000" />
     </task>
+    <task id="LOCAL-00001" summary="1.按照github的讨论，修改bug  &#10;2.添加保存点云，输出相机帧间移动距离，旋转角度函数，待应用 &#10;3.添加显示groundtruth轨迹   &#10;4.准备去除boost库,ing中">
+      <created>1544083808060</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1544083808060</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58123000" />
+    <option name="totallyTimeSpent" value="70670000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16657443" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16989486" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32936078" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.35969663" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -441,7 +444,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="adding show results" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding show results" />
+    <MESSAGE value="1.按照github的讨论，修改bug  &#10;2.添加保存点云，输出相机帧间移动距离，旋转角度函数，待应用 &#10;3.添加显示groundtruth轨迹   &#10;4.准备去除boost库,ing中" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.按照github的讨论，修改bug  &#10;2.添加保存点云，输出相机帧间移动距离，旋转角度函数，待应用 &#10;3.添加显示groundtruth轨迹   &#10;4.准备去除boost库,ing中" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -503,73 +507,10 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/FullSystem/ImmaturePoint.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="88" column="10" selection-start-line="88" selection-start-column="10" selection-end-line="88" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/c++/5/cmath">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="587" column="2" selection-start-line="587" selection-start-column="2" selection-end-line="587" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/FullSystem/ImmaturePoint.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="95" column="35" selection-start-line="95" selection-start-column="35" selection-end-line="95" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/math.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="97" column="10" selection-start-line="97" selection-start-column="10" selection-end-line="97" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/c++/5/bits/stl_deque.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27558">
-          <caret line="1531" selection-start-line="1531" selection-end-line="1531" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/boost/thread/pthread/condition_variable.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="144" column="36" selection-start-line="144" selection-start-column="36" selection-end-line="144" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/FullSystem/CoarseTracker.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="500" column="19" lean-forward="true" selection-start-line="500" selection-start-column="19" selection-end-line="500" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/FullSystem/HessianBlocks.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="274" column="74" selection-start-line="274" selection-start-column="74" selection-end-line="274" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/include/GL/glew.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
           <caret line="1057" column="22" selection-start-line="1057" selection-start-column="22" selection-end-line="1057" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/NumType.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="101">
-          <caret line="165" column="41" selection-start-line="165" selection-start-column="41" selection-end-line="165" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -584,13 +525,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="174">
           <caret line="476" selection-start-line="476" selection-end-line="476" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/IOWrapper/OpenCV/ImageRW_OpenCV.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="36" selection-start-line="36" selection-end-line="36" />
         </state>
       </provider>
     </entry>
@@ -683,13 +617,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/FullSystem/FullSystem.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2682">
-          <caret line="149" column="42" selection-start-line="149" selection-start-column="42" selection-end-line="149" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/OptimizationBackend/AccumulatedSCHessian.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
@@ -701,13 +628,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5148">
           <caret line="286" selection-start-line="286" selection-end-line="286" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/eigen3/Eigen/src/Core/AssignEvaluator.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="653" column="2" lean-forward="true" selection-start-line="653" selection-start-column="2" selection-end-line="653" selection-end-column="2" />
         </state>
       </provider>
     </entry>
@@ -725,30 +645,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/show_result_main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2232">
-          <caret line="124" column="24" selection-start-line="124" selection-start-column="8" selection-end-line="124" selection-end-column="24" />
-          <folding>
-            <marker date="1544060743661" expanded="false" signature="11472:22339" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/IOWrapper/Pangolin/PangolinDSOViewer.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="29" column="14" lean-forward="true" selection-start-line="29" selection-start-column="14" selection-end-line="29" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/PangolinDisplay_test.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="524">
           <caret line="220" selection-start-line="220" selection-end-line="220" />
-          <folding>
-            <element signature="e#39#58#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -756,23 +656,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="178">
           <caret line="319" column="100" selection-start-line="319" selection-start-column="100" selection-end-line="319" selection-end-column="100" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="26" column="7" selection-start-line="26" selection-start-column="7" selection-end-line="26" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/IOWrapper/Pangolin/PangolinDSOViewer.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
-          <folding>
-            <element signature="e#921#951#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -801,43 +684,156 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/IOWrapper/OpenCV/ImageRW_OpenCV.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/IOWrapper/OpenCV/ImageDisplay_OpenCV.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="29" column="16" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/util/Undistort.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
+        <state relative-caret-position="12852">
           <caret line="714" column="28" selection-start-line="714" selection-start-column="16" selection-end-line="714" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FullSystem/PixelSelector2.cpp">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6552">
+          <caret line="364" column="59" selection-start-line="364" selection-start-column="59" selection-end-line="364" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/boost/thread/lock_types.hpp">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="229">
-          <caret line="364" column="59" lean-forward="true" selection-start-line="364" selection-start-column="59" selection-end-line="364" selection-end-column="59" />
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FullSystem/FullSystemOptimize.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="533" column="34" selection-start-line="533" selection-start-column="16" selection-end-line="533" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/eigen3/Eigen/src/Core/util/Memory.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="689" column="8" selection-start-line="689" selection-start-column="8" selection-end-line="689" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/NumType.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="702">
+          <caret line="41" column="8" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FullSystem/FullSystem.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6563">
-          <caret line="1351" column="23" lean-forward="true" selection-start-line="1351" selection-start-column="23" selection-end-line="1351" selection-end-column="23" />
+        <state relative-caret-position="17658">
+          <caret line="981" selection-start-line="981" selection-end-line="981" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/OptimizationBackend/EnergyFunctional.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7758">
+          <caret line="431" column="29" selection-start-line="431" selection-start-column="29" selection-end-line="431" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/OptimizationBackend/AccumulatedSCHessian.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1908">
+          <caret line="106" column="23" selection-start-line="106" selection-start-column="12" selection-end-line="106" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/OptimizationBackend/AccumulatedTopHessian.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2088">
+          <caret line="116" column="37" selection-start-line="116" selection-start-column="37" selection-end-line="116" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/show_result_main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4662">
+          <caret line="259" column="5" selection-start-line="259" selection-start-column="5" selection-end-line="259" selection-end-column="5" />
           <folding>
-            <element signature="e#5515#5987#0" />
-            <marker date="1544082743307" expanded="false" signature="9445:13357" ph="{...}" />
-            <marker date="1544082743307" expanded="false" signature="9790:13208" ph="{...}" />
-            <marker date="1544082743307" expanded="false" signature="13365:20367" ph="{...}" />
-            <marker date="1544082743307" expanded="false" signature="20940:22646" ph="{...}" />
-            <marker date="1544082743307" expanded="true" signature="46894:48627" ph="{...}" />
+            <marker date="1544087432410" expanded="false" signature="11440:22307" ph="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/IndexThreadReduce.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1044">
+          <caret line="58" column="27" selection-start-line="58" selection-start-column="27" selection-end-line="58" selection-end-column="27" />
+          <folding>
+            <element signature="e#934#963#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/IOWrapper/Pangolin/PangolinDSOViewer.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1638">
+          <caret line="91" column="7" selection-start-line="91" selection-start-column="7" selection-end-line="91" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main_dso_pangolin.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="658" column="24" lean-forward="true" selection-start-line="658" selection-start-column="24" selection-end-line="658" selection-end-column="24" />
+        <state relative-caret-position="347">
+          <caret line="110" column="31" selection-start-line="110" selection-start-column="31" selection-end-line="110" selection-end-column="31" />
           <folding>
-            <element signature="e#2445#4289#0" />
-            <marker date="1544083097173" expanded="false" signature="11060:18318" ph="{...}" />
+            <element signature="e#1598#1615#0" expanded="true" />
+            <marker date="1544087511504" expanded="false" signature="11069:18327" ph="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/eigen3/Eigen/src/Core/AssignEvaluator.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="653" column="2" lean-forward="true" selection-start-line="653" selection-start-column="2" selection-end-line="653" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/IOWrapper/Pangolin/PangolinDSOViewer.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1512">
+          <caret line="223" column="13" selection-start-line="223" selection-start-column="13" selection-end-line="223" selection-end-column="13" />
+          <folding>
+            <element signature="e#921#951#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FullSystem/FullSystem.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="27" column="29" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="168" lean-forward="true" selection-start-line="168" selection-end-line="168" />
         </state>
       </provider>
     </entry>

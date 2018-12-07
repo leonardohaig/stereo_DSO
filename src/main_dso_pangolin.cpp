@@ -47,11 +47,12 @@
 #include <unistd.h>
 #include <chrono>
 
+#include <sys/time.h>
+
 #include "IOWrapper/Output3DWrapper.h"
 #include "IOWrapper/ImageDisplay.h"
 
 
-#include <boost/thread.hpp>
 #include "util/settings.h"
 #include "util/globalFuncs.h"
 #include "util/DatasetReader.h"
@@ -69,6 +70,7 @@
 
 #include <opencv/cv.hpp>
 #include <opencv/highgui.h>
+#include <atomic>
 
 
 std::string vignette = "";
@@ -400,7 +402,7 @@ int main( int argc, char** argv )
 		parseArgument(argv[i]);
 	
 	// hook crtl+C.
-	boost::thread exThread = boost::thread(exitThread);
+	std::thread exThread = std::thread(exitThread);
 
 	ImageFolderReader* reader = new ImageFolderReader(source+"/image_0", calib, gammaCalib, vignette);
 	ImageFolderReader* reader_right = new ImageFolderReader(source+"/image_1", calib, gammaCalib, vignette);

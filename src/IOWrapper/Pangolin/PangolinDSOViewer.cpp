@@ -36,6 +36,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sys/time.h>
 
 namespace dso
 {
@@ -50,7 +51,7 @@ PangolinDSOViewer::PangolinDSOViewer(int w, int h, bool startRunThread)
 
 
 	{
-		boost::unique_lock<boost::mutex> lk(openImagesMutex);
+		std::unique_lock<std::mutex> lk(openImagesMutex);
 		internalVideoImg = new MinimalImageB3(w,h);
 		internalKFImg = new MinimalImageB3(w,h);
 		internalResImg = new MinimalImageB3(w,h);
@@ -73,7 +74,7 @@ PangolinDSOViewer::PangolinDSOViewer(int w, int h, bool startRunThread)
 
 
     if(startRunThread)
-        runThread = boost::thread(&PangolinDSOViewer::run, this);
+        runThread = std::thread(&PangolinDSOViewer::run, this);
 
 }
 
@@ -81,7 +82,8 @@ PangolinDSOViewer::PangolinDSOViewer(int w, int h, bool startRunThread)
 PangolinDSOViewer::~PangolinDSOViewer()
 {
 	close();
-	runThread.join();
+	if( runThread.joinable() )
+		runThread.join();
 }
 
 
@@ -215,7 +217,7 @@ void PangolinDSOViewer::run()
 		{
 			// Activate efficiently by object
 			Visualization3D_display.Activate(Visualization3D_camera);
-			boost::unique_lock<boost::mutex> lk3d(model3DMutex);
+			std::unique_lock<std::mutex> lk3d(model3DMutex);
 			//pangolin::glDrawColouredCube();
 			int refreshed=0;
 			for(KeyFrameDisplay* fh : keyframes)
@@ -224,7 +226,7 @@ void PangolinDSOViewer::run()
 				if(this->settings_showKFCameras) fh->drawCam(1,blue,0.1);
 
 
-				refreshed =+ (int)(fh->refreshPC(refreshed < 10, this->settings_scaledVarTH, this->settings_absVarTH,
+				refreshed += (int)(fh->refreshPC(refreshed < 10, this->settings_scaledVarTH, this->settings_absVarTH,
 						this->settings_pointCloudMode, this->settings_minRelBS, this->settings_sparsity));
 				fh->drawPC(1);
 
@@ -535,7 +537,7 @@ void PangolinDSOViewer::publishKeyframes(
 	if(!setting_render_display3D) return;
     if(disableAllDisplay) return;
 
-	boost::unique_lock<boost::mutex> lk(model3DMutex);
+	std::unique_lock<std::mutex> lk(model3DMutex);
 	for(FrameHessian* fh : frames)
 	{
 		if(keyframesByKFID.find(fh->frameID) == keyframesByKFID.end())
@@ -555,7 +557,7 @@ void PangolinDSOViewer::publishCamPose(FrameShell* frame,
     if(!setting_render_display3D) return;
     if(disableAllDisplay) return;
 
-	boost::unique_lock<boost::mutex> lk(model3DMutex);
+	std::unique_lock<std::mutex> lk(model3DMutex);
 	struct timeval time_now;
 	gettimeofday(&time_now, NULL);
 	lastNTrackingMs.push_back(((time_now.tv_sec-last_track.tv_sec)*1000.0f + (time_now.tv_usec-last_track.tv_usec)/1000.0f));
@@ -574,7 +576,7 @@ void PangolinDSOViewer::pushLiveFrame(FrameHessian* image)
 	if(!setting_render_displayVideo) return;
     if(disableAllDisplay) return;
 
-	boost::unique_lock<boost::mutex> lk(openImagesMutex);
+    std::unique_lock<std::mutex> lk(openImagesMutex);
 
 	for(int i=0;i<w*h;i++)
 	{
@@ -596,7 +598,7 @@ void PangolinDSOViewer::pushStereoLiveFrame(FrameHessian* image,FrameHessian* im
 	if(!setting_render_displayVideo) return;
     if(disableAllDisplay) return;
 
-	boost::unique_lock<boost::mutex> lk(openImagesMutex);
+    std::unique_lock<std::mutex> lk(openImagesMutex);
 
 	for(int i=0;i<w*h;i++)
 	{
@@ -625,7 +627,7 @@ void PangolinDSOViewer::pushDepthImage(MinimalImageB3* image)
     if(!setting_render_displayDepth) return;
     if(disableAllDisplay) return;
 
-	boost::unique_lock<boost::mutex> lk(openImagesMutex);
+    std::unique_lock<std::mutex> lk(openImagesMutex);
 
 	struct timeval time_now;
 	gettimeofday(&time_now, NULL);

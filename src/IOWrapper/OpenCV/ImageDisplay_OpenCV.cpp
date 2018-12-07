@@ -27,10 +27,9 @@
 
 #include <opencv2/highgui/highgui.hpp>
 
+#include <mutex>
 #include <string>
 #include <unordered_set>
-
-#include <boost/thread.hpp>
 
 #include "util/settings.h"
 
@@ -42,7 +41,7 @@ namespace IOWrap
 {
 
 std::unordered_set<std::string> openWindows;
-boost::mutex openCVdisplayMutex;
+std::mutex openCVdisplayMutex;
 
 
 
@@ -50,7 +49,7 @@ void displayImage(const char* windowName, const cv::Mat& image, bool autoSize)
 {
 	if(disableAllDisplay) return;
 
-	boost::unique_lock<boost::mutex> lock(openCVdisplayMutex);
+	std::unique_lock<std::mutex> lock(openCVdisplayMutex);
 	if(!autoSize)
 	{
 		if(openWindows.find(windowName) == openWindows.end())
@@ -181,14 +180,14 @@ int waitKey(int milliseconds)
 {
 	if(disableAllDisplay) return 0;
 
-	boost::unique_lock<boost::mutex> lock(openCVdisplayMutex);
+    std::unique_lock<std::mutex> lock(openCVdisplayMutex);
 	return cv::waitKey(milliseconds);
 }
 
 void closeAllWindows()
 {
 	if(disableAllDisplay) return;
-	boost::unique_lock<boost::mutex> lock(openCVdisplayMutex);
+    std::unique_lock<std::mutex> lock(openCVdisplayMutex);
 	cv::destroyAllWindows();
 	openWindows.clear();
 }
